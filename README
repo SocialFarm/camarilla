@@ -1,0 +1,13 @@
+
+Camarilla is a restful server which allows clients to 
+send requests and offers.
+
+Its purpose is to support group formation among matching
+or approximately matching requests and offers. 
+
+The group formation can be done in one of the following ways: 
+i) human choice but aided by the camarilla server providing an 
+ordered set of highly ranked candidates,  and ii) 
+by the server making the decision to match highly 
+ranked candidates 
+

@@ -3,7 +3,6 @@ package org.socialfarm.camarilla;
 
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
-import org.junit.Ignore;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -17,10 +16,9 @@ public class BasicServerTest extends JerseyTest
         return new ResourceConfig( CamarillaEndPoints.class ) ;
     }
 
-    @Ignore
     @Test
     public void test() {
         final String status = target("status").request().get(String.class);
-        assertEquals("OK", status);
+        assertEquals("{\"status\": \"OK\"}", status);
     }
 }

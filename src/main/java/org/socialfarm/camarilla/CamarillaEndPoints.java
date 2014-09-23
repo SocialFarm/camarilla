@@ -14,7 +14,7 @@ public class CamarillaEndPoints {
     @GET
     @Path(value="/status")
     @Produces(value={"application/json"})
-    String getStatus() {
+    public String getStatus() {
         JSONObject response = new JSONObject() ;
         response.put( "status" , "OK" ) ;
         return response.toString( 4 ) ;

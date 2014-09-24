@@ -26,7 +26,9 @@ public class CamarillaEndPoints {
     @Consumes(value = {"application/json"})
     @Produces(value = {"application/json"})
     public String addOrder(@PathParam(value="itemName") String itemName,  String orderDetail) {
-        return "{ orderid = 111 }" ;
+        JSONObject response = new JSONObject() ;
+        response.put( "orderId" , 111 ) ;
+        return response.toString( 4 ) ;
     }
 
 

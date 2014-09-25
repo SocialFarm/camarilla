@@ -1,15 +1,10 @@
 package org.socialfarm.camarilla;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.util.HashMap;
 import java.util.TreeMap;
-import java.util.concurrent.ConcurrentHashMap;
+
 
 
 /**
@@ -18,9 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 class GroupGenerator {
 
-    final Invocable inv ;
-
-    final String code ;
+    final ScoringFunction scoringFunction ;
 
     /**
      * map of orderids to orders. this data structure is the "correct" set of orders
@@ -49,27 +42,15 @@ class GroupGenerator {
 
 
     GroupGenerator( String generatorCode ) throws ScriptException {
-        this.code = generatorCode ;
-
-        ScriptEngineManager manager = new ScriptEngineManager();
-        ScriptEngine engine = manager.getEngineByName("JavaScript");
-        engine.eval(generatorCode);
-
-        // confirm that the javascript engine implements the optional invocable interface
-        if ( engine instanceof Invocable) {
-            inv = (Invocable) engine;
-        } else {
-            throw new Error("scripting engine doesnt have Invocable support");
-        }
+        this.scoringFunction = new ScoringFunction(generatorCode) ;
     }
 
 
     private double getMatchScore(Order a,  Order b) throws ScriptException, NoSuchMethodException {
         if ( a == null || a.hasExpired() || b == null || b.hasExpired() )
             return Double.NEGATIVE_INFINITY ;
-        Object result = inv.invokeFunction( "matchScore" ,
-                a.theOrder.toString() , b.theOrder.toString() ) ;
-        return (Double) result ;
+        else
+            return scoringFunction.getMatchScore( a.theOrder.toString() , b.theOrder.toString() ) ;
     }
 
 

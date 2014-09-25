@@ -10,8 +10,6 @@ import static org.junit.Assert.*;
 
 import javax.json.Json;
 import javax.json.JsonObject;
-import javax.json.JsonString;
-import javax.json.JsonValue;
 import javax.json.stream.JsonGenerator;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
@@ -29,7 +27,7 @@ public class BasicServerTest extends JerseyTest
     }
 
     @Test
-    public void test() {
+    public void testStatus() {
         final String status = target("status").request().get(String.class);
         assertEquals("{\"status\": \"OK\"}", status);
     }

@@ -2,9 +2,7 @@ package org.socialfarm.camarilla;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import javax.script.ScriptException;
-import java.util.HashMap;
-import java.util.TreeMap;
-
+import java.util.*;
 
 
 /**
@@ -55,7 +53,7 @@ class GroupGenerator {
 
 
 
-    public void putOrder(Order order) throws CaramillaException, ScriptException, NoSuchMethodException {
+    public String putOrder(Order order) throws CaramillaException, ScriptException, NoSuchMethodException {
         // can not reinsert order unless expired
         if( openOrders.containsKey( order.orderId ) &&
                 ! openOrders.get(order.orderId).hasExpired() ) {
@@ -92,13 +90,33 @@ class GroupGenerator {
 
         // lastly put the order in authoritative list
         openOrders.put( order.orderId , order ) ;
+        return order.orderId ;
     }
+
+
 
     public Order getOrder(String orderId) {
         if( openOrders.containsKey( orderId ) && ! openOrders.get(orderId).hasExpired() ) {
             return openOrders.get(orderId) ;
         }
         return null ;
+    }
+
+
+
+    public List<Order> getMatchingOrders(String orderId, int maxOrders) {
+        ArrayList<Order> matchingOrders = new ArrayList<Order>() ;
+        if( ! openOrders.containsKey( orderId ) || openOrders.get(orderId).hasExpired() ) {
+            return matchingOrders ;
+        }
+        double bestScore = bestMatch.get(orderId).getRight();
+        int numOrders = 0;
+        for( Map.Entry<Double, ImmutablePair<String,String>> entry : goodnessOrder.headMap( bestScore ).entrySet() ) {
+            if( numOrders++ > maxOrders && entry.getValue().getLeft().equals( orderId ) ) {
+                matchingOrders.add(openOrders.get(entry.getValue().getRight()));
+            }
+        }
+        return matchingOrders ;
     }
 
 }

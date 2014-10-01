@@ -34,10 +34,10 @@ public class BasicServerTest extends JerseyTest
 
 
     @Test
-    public void testPostOrder() {
+    public void testAddOrder() {
         JsonObject order = Json.createObjectBuilder()
                 .add("test", "test").build() ;
-        final Response response = target("order/testitem").request().post(Entity.json(order)) ;
+        final Response response = target("addOrder/testfunction").request().post(Entity.json(order)) ;
 
         assertEquals(200, response.getStatus());
 

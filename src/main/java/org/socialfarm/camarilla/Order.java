@@ -18,5 +18,9 @@ public class Order {
     public boolean hasExpired() {
         return System.currentTimeMillis() > expireTimeStampMillis ? true : false ;
     }
+
+    public Order(String orderDetail) {
+        // TODO : to implement : what is order
+    }
 }
 

@@ -1,7 +1,7 @@
 package org.socialfarm.camarilla;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import javax.script.ScriptException;
+
 import java.util.*;
 
 
@@ -39,12 +39,12 @@ class GroupGenerator {
 
 
 
-    GroupGenerator( String functionName, String scoringCode ) throws CaramillaException {
+    GroupGenerator( String functionName, String scoringCode ) throws CamarillaException {
         this.scoringFunction = new ScoringFunction(functionName, scoringCode) ;
     }
 
 
-    private double getMatchScore(Order a,  Order b) throws CaramillaException {
+    private double getMatchScore(Order a,  Order b) throws CamarillaException {
         if ( a == null || a.hasExpired() || b == null || b.hasExpired() )
             return Double.NEGATIVE_INFINITY ;
         else
@@ -53,11 +53,11 @@ class GroupGenerator {
 
 
 
-    public String putOrder(Order order) throws CaramillaException  {
+    public String putOrder(Order order) throws CamarillaException {
         // can not reinsert order unless expired
         if( openOrders.containsKey( order.orderId ) &&
                 ! openOrders.get(order.orderId).hasExpired() ) {
-            throw new CaramillaException( "order " + order + " was already in set of open unexpired orders ") ;
+            throw new CamarillaException( "order " + order + " was already in set of open unexpired orders ") ;
         }
 
         // add into the expiry order first so it will get removed eventually regardless

@@ -61,7 +61,7 @@ public class CamarillaEndPoints {
             response.put("orderId", orderId);
             return response.toString(4);
         }
-        catch (CaramillaException ex) {
+        catch (CamarillaException ex) {
             ex.printStackTrace();
             return getStatusJSON("ERROR" , ex.getMessage() ) ;
         }
@@ -77,7 +77,7 @@ public class CamarillaEndPoints {
     {
         try {
             camarilla.getMatchingOrders(functionName, orderId, maxOrders) ;
-        } catch (CaramillaException ex) {
+        } catch (CamarillaException ex) {
             ex.printStackTrace();
             return getStatusJSON("ERROR" , ex.getMessage() ) ;
         }

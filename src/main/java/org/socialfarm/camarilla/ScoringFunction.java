@@ -16,7 +16,7 @@ public class ScoringFunction {
 
     final String code ;
 
-    public ScoringFunction( String functionName, String generatorCode ) throws CaramillaException {
+    public ScoringFunction( String functionName, String generatorCode ) throws CamarillaException {
         this.code = generatorCode ;
         this.name = functionName ;
 
@@ -28,7 +28,7 @@ public class ScoringFunction {
         try {
             engine.eval(generatorCode);
         } catch (ScriptException e) {
-            throw new CaramillaException( "script does not eval " ) ;
+            throw new CamarillaException( "script does not eval " ) ;
         }
 
         // confirm that the javascript engine implements the optional invocable interface
@@ -40,12 +40,12 @@ public class ScoringFunction {
     }
 
 
-    public double getMatchScore(String a,  String b) throws CaramillaException {
+    public double getMatchScore(String a,  String b) throws CamarillaException {
         Object result = null;
         try {
             result = inv.invokeFunction( this.name , a, b );
         } catch (ScriptException e) {
-            throw new CaramillaException( "script did not eval" ) ;
+            throw new CamarillaException( "script did not eval" ) ;
         } catch (NoSuchMethodException e) {
             throw new RuntimeException( "unexpected loss of method after succesful init");
         }
@@ -53,7 +53,7 @@ public class ScoringFunction {
     }
 
 
-    private void validate() throws CaramillaException {
+    private void validate() throws CamarillaException {
         ScriptEngineManager manager = new ScriptEngineManager();
         ScriptEngine engine = manager.getEngineByName("JavaScript");
         try {
@@ -62,10 +62,10 @@ public class ScoringFunction {
             String functionType = (String) engine.eval( String.format( "typeof(%s)" , this.name) ) ;
             int numArgs = (Integer) engine.eval( String.format( "%s.length" , this.name)  ) ;
             if( !functionType.equals( "function" ) || numArgs != 2 ) {
-                throw new CaramillaException( "code does not have a function taking two args with name " + name ) ;
+                throw new CamarillaException( "code does not have a function taking two args with name " + name ) ;
             }
         } catch (ScriptException e) {
-            throw new CaramillaException( "script does not eval" ) ;
+            throw new CamarillaException( "script does not eval" ) ;
         }
     }
 }

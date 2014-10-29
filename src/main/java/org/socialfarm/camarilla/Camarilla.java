@@ -21,7 +21,7 @@ public class Camarilla {
 
 
 
-    synchronized public static String addOrder(String functionName,  String orderDetail) throws CaramillaException {
+    synchronized public static String addOrder(String functionName,  String orderDetail) throws CamarillaException {
         try {
 
             GroupGenerator gg = generators.get(functionName);
@@ -40,10 +40,10 @@ public class Camarilla {
 
 
 
-    synchronized public static List<Order> getMatchingOrders(String functionName, String orderId, int maxOrders ) throws CaramillaException {
+    synchronized public static List<Order> getMatchingOrders(String functionName, String orderId, int maxOrders ) throws CamarillaException {
         GroupGenerator gg = generators.get(functionName);
         if (gg == null) {
-            throw new CaramillaException( "no function name " + functionName ) ;
+            throw new CamarillaException( "no function name " + functionName ) ;
         }
         return gg.getMatchingOrders( orderId , maxOrders ) ;
     }

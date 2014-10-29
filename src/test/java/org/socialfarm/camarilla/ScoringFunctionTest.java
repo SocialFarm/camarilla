@@ -23,7 +23,7 @@ public class ScoringFunctionTest {
      * @throws IOException
      * @throws ScriptException
      */
-    private ScoringFunction getScoringFunction( String name, String resource ) throws IOException, CaramillaException {
+    private ScoringFunction getScoringFunction( String name, String resource ) throws IOException, CamarillaException {
         final InputStream is = getClass().getClassLoader().getResourceAsStream( resource ) ;
         return new ScoringFunction( name, IOUtils.toString(is) ) ;
     }
@@ -37,7 +37,7 @@ public class ScoringFunctionTest {
     }
 
     @Test
-    public void testTrivialScoringFunction() throws IOException, CaramillaException {
+    public void testTrivialScoringFunction() throws IOException, CamarillaException {
         ScoringFunction scoringFunction = getScoringFunction( "matchScore" , "TrivialScoringFunction.js") ;
         double score = scoringFunction.getMatchScore( " " , " " ) ;
         assertTrue ( 2.9 == score ) ;
@@ -50,7 +50,7 @@ public class ScoringFunctionTest {
         ScoringFunction scoringFunction = null;
         try {
             scoringFunction = getScoringFunction( "matchScore" , "InvalidScoringFunction.js" );
-        } catch (CaramillaException e) {
+        } catch (CamarillaException e) {
             // expected error on invalid function name
             System.out.println( "got expected error :" + e.getLocalizedMessage() ) ;
             return ;

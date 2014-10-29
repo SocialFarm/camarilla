@@ -26,7 +26,7 @@ public class Camarilla {
 
             GroupGenerator gg = generators.get(functionName);
             if (gg == null) {
-                gg = new GroupGenerator(scoringFunctions.get(functionName));
+                gg = new GroupGenerator(functionName, scoringFunctions.get(functionName));
                 generators.put(functionName, gg);
             }
 

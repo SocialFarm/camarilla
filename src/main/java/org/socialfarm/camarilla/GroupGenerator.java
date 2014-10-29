@@ -39,12 +39,12 @@ class GroupGenerator {
 
 
 
-    GroupGenerator( String generatorCode ) throws ScriptException {
-        this.scoringFunction = new ScoringFunction(generatorCode) ;
+    GroupGenerator( String functionName, String scoringCode ) throws CaramillaException {
+        this.scoringFunction = new ScoringFunction(functionName, scoringCode) ;
     }
 
 
-    private double getMatchScore(Order a,  Order b) throws ScriptException, NoSuchMethodException {
+    private double getMatchScore(Order a,  Order b) throws CaramillaException {
         if ( a == null || a.hasExpired() || b == null || b.hasExpired() )
             return Double.NEGATIVE_INFINITY ;
         else
@@ -53,7 +53,7 @@ class GroupGenerator {
 
 
 
-    public String putOrder(Order order) throws CaramillaException, ScriptException, NoSuchMethodException {
+    public String putOrder(Order order) throws CaramillaException  {
         // can not reinsert order unless expired
         if( openOrders.containsKey( order.orderId ) &&
                 ! openOrders.get(order.orderId).hasExpired() ) {

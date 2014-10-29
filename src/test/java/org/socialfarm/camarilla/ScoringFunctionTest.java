@@ -15,9 +15,17 @@ import java.io.InputStream;
  */
 public class ScoringFunctionTest {
 
-    private ScoringFunction getScoringFunction( String resource ) throws IOException, ScriptException {
+    /**
+     * Read a function code from resource and initialize with the given function name
+     * @param name
+     * @param resource
+     * @return
+     * @throws IOException
+     * @throws ScriptException
+     */
+    private ScoringFunction getScoringFunction( String name, String resource ) throws IOException, CaramillaException {
         final InputStream is = getClass().getClassLoader().getResourceAsStream( resource ) ;
-        return new ScoringFunction( IOUtils.toString(is) ) ;
+        return new ScoringFunction( name, IOUtils.toString(is) ) ;
     }
 
     @BeforeClass
@@ -29,14 +37,28 @@ public class ScoringFunctionTest {
     }
 
     @Test
-    public void testTrivialScoringFunction() throws IOException, ScriptException, NoSuchMethodException {
-        ScoringFunction scoringFunction = getScoringFunction( "TrivialScoringFunction.js") ;
+    public void testTrivialScoringFunction() throws IOException, CaramillaException {
+        ScoringFunction scoringFunction = getScoringFunction( "matchScore" , "TrivialScoringFunction.js") ;
         double score = scoringFunction.getMatchScore( " " , " " ) ;
         assertTrue ( 2.9 == score ) ;
     }
 
+
+    // function "matchScore" is not present in script and should cause error
+    @Test
+    public void testInvalidScoringFunction() throws IOException {
+        ScoringFunction scoringFunction = null;
+        try {
+            scoringFunction = getScoringFunction( "matchScore" , "InvalidScoringFunction.js" );
+        } catch (CaramillaException e) {
+            // expected error on invalid function name
+            System.out.println( "got expected error :" + e.getLocalizedMessage() ) ;
+            return ;
+        }
+        fail( "expected failure but scoring function was instantiated") ;
+    }
+
     // TODO : Add tests for
-    // function "matchScore" not present in script should cause error
     // function returning non double or not castable to double should cause error
     // function exception eg on bad input data should be handled in reasonable manner
 }

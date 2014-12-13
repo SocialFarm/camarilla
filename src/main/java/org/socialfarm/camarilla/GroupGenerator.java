@@ -61,7 +61,7 @@ class GroupGenerator {
         }
 
         // add into the expiry order first so it will get removed eventually regardless
-        expiryOrder.put( order.expireTimeStampMillis , order ) ;
+        expiryOrder.put( order.expiresAt, order ) ;
 
         double best = Double.NEGATIVE_INFINITY ;
         for( Order o : openOrders.values() ) {

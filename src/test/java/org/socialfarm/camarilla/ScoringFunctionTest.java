@@ -60,5 +60,24 @@ public class ScoringFunctionTest {
 
     // TODO : Add tests for
     // function returning non double or not castable to double should cause error
+    @Test
+    public void testInvalidReturnValue() throws IOException, CamarillaException  {
+        ScoringFunction scoringFunction = getScoringFunction( "matchScore" , "InvalidreturnScoringFunction.js" ) ;
+        double score = scoringFunction.getMatchScore( " ", " ") ;
+        assertFalse ( 2.9 == score ) ;
+    }
+    
     // function exception eg on bad input data should be handled in reasonable manner
+    @Test
+    public void testBadInputTestFunction() throws IOException {
+        ScoringFunction scoringFunction = null ;
+        try {
+            scoringFunction = getScoringFunction ( "matchScore" , "InvalidFunctionTypeFunction.js") ;
+        } catch (CamarillaException e) {
+            //Expected Error
+            System.out.println("got expected error " + e.getLocalizedMessage() );
+            return ;
+        }
+        fail( "expected failure but scoring function was instantiated") ;
+    }
 }
